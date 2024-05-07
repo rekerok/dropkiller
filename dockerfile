@@ -1,5 +1,5 @@
 # Используйте официальный образ Python как базовый
-FROM python:3.9
+FROM python:3.9-slim
 
 # Установите рабочую директорию в контейнере
 WORKDIR /app
@@ -8,9 +8,7 @@ WORKDIR /app
 COPY . .
 
 # Установите зависимости
-RUN pip install -r requirements.txt
-
-# Копируйте остальные файлы проекта в контейнер
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Откройте порт, который будет использоваться вашим приложением
 EXPOSE 8080
