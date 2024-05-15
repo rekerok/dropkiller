@@ -33,7 +33,6 @@ class Swap(Resource):
 
         dex = dex(web3_client=w3_client)
         transaction = dex.swap(
-            dex=dex,
             amount=10,
             from_token_address=from_token_address,
             to_token_address=to_token_address,

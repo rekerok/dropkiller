@@ -74,7 +74,7 @@ class Odos(BaseSwap):
             to_token.address = "0x0000000000000000000000000000000000000000"
         quote = self._get_quote(from_token=from_token, to_token=to_token, amount=amount)
         assemble = self._get_assemble(path_id=quote["pathId"])
-        return self.send_transaction(
+        return self.web3_client.send_transaction(
             from_token=from_token,
             to_address=self.contract.address,
             amount=amount,

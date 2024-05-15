@@ -1,16 +1,13 @@
 from typing import Union
-from app.w3.blockchain_interaction import BlockchainInteraction
 from app.w3.token_amount import Token_Amount
 from app.w3.token_info import Token_Info
 from app.w3.web3_client import Web3Client
 
 
-class BaseSwap(BlockchainInteraction):
+class BaseSwap:
     def __init__(self, web3_client: Web3Client, slippage: int = 5) -> None:
-        super().__init__(web3_client=web3_client)
+        self.web3_client = web3_client
         self.slippage = slippage
-
-
 
     def price_impact(): ...
 
@@ -18,9 +15,10 @@ class BaseSwap(BlockchainInteraction):
         self, from_token: Token_Info, to_token: Token_Info, amount: Token_Amount
     ): ...
 
+
+
     def swap(
         self,
-        dex: str,
         amount: Union[int, float],
         from_token_address: str = "",
         to_token_address: str = "",

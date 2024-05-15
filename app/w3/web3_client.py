@@ -95,6 +95,37 @@ class Web3Client:
             # print(error)
             return None
 
+    def get_data_for_approve(
+        self, token: Token_Info, spender: str, amount: Token_Amount
+    ):
+        contract = self.get_contract(
+            address=eth_utils.address.to_checksum_address(token.address),
+            abi=abis["erc20"],
+        )
+
+        value_approove = Token_Amount(
+            amount=amount.WEI + 1,
+            decimals=amount.DECIMAL,
+            wei=True,
+        )
+        data = contract.encodeABI(
+            "approve",
+            args=(
+                eth_utils.address.to_checksum_address(spender),
+                int(value_approove.WEI),
+            ),
+        )
+        tx_params = self.get_data_transaction(
+            to_address=token.address,
+            data=data,
+        )
+        return tx_params
+
+    def get_contract(self, address: str, abi: str):
+        return self.w3.eth.contract(
+            address=eth_utils.address.to_checksum_address(address), abi=abi
+        )
+
     def _get_allowance(self, contract, owner: str, spender: str) -> Token_Amount:
         try:
             amount_allowance = contract.functions.allowance(
@@ -136,7 +167,52 @@ class Web3Client:
         )
         return tx_params
 
-    def get_contract(self, address: str, abi: str):
-        return self.w3.eth.contract(
-            address=eth_utils.address.to_checksum_address(address), abi=abi
+    def check_approve(self, token: Token_Info, spender: str, amount: Token_Amount):
+        contract = self.get_contract(
+            address=eth_utils.address.to_checksum_address(token.address),
+            abi=abis["erc20"],
         )
+        allowanced: Token_Amount = self._get_allowance(
+            contract=contract, owner=self.address, spender=spender
+        )
+        if allowanced.WEI > amount.WEI:
+            return False
+        else:
+            return True
+
+    def send_transaction(
+        self,
+        from_token: Token_Info,
+        to_address: str,
+        amount: Token_Amount = None,
+        data: str = None,
+        value=None,
+    ):
+        if not Token_Info.is_native_token(network=self.network, token=from_token):
+            need_approve = self.check_approve(
+                token=from_token, spender=to_address, amount=amount
+            )
+
+            if need_approve:
+                tx_approve = self.get_data_for_approve(
+                    token=from_token, spender=to_address, amount=amount
+                )
+                type = "approve"
+                params = tx_approve
+            else:
+                type = "transaction"
+                params = self.get_data_transaction(to_address=to_address, data=data)
+
+        else:
+            type = "transaction"
+            value = amount
+            params = self.get_data_transaction(
+                to_address=to_address, data=data, value=value
+            )
+        return {
+            "type": type,
+            "params": params,
+            "contract": to_address,
+            "address": self.address,
+            "amount": amount,
+        }
