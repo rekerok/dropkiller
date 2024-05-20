@@ -6,7 +6,6 @@ from app.w3.token_info import Token_Info
 from app.w3.web3_client import Web3Client
 from . import templates_fields
 
-# Создаем объект reqparse для обработки параметров запроса
 parser = reqparse.RequestParser()
 parser.add_argument("network", type=str)
 parser.add_argument("token_address", type=str)
