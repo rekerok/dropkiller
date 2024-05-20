@@ -2,9 +2,9 @@ import requests
 from app.w3.token_amount import Token_Amount
 from app.w3.token_info import Token_Info
 from app.w3.web3_client import Web3Client
-from config import ODOS_URL
+from app.config import ODOS_URL
 from . import BaseSwap
-from app.abis import contracts, abis
+from app.models import contracts
 
 
 class Odos(BaseSwap):
@@ -12,8 +12,8 @@ class Odos(BaseSwap):
     def __init__(self, web3_client: Web3Client, slippage: float = 5) -> None:
         super().__init__(web3_client=web3_client, slippage=slippage)
         self.contract = self.web3_client.get_contract(
-            address=contracts["odos"][self.web3_client.network["name"]],
-            abi=abis["odos"],
+            address=contracts["odos"]["contracts"][self.web3_client.network["name"]],
+            abi=contracts["odos"]["abi"],
         )
 
     def _get_quote(
@@ -25,7 +25,7 @@ class Odos(BaseSwap):
         data = {
             "chainId": self.web3_client.w3.eth.chain_id,
             "inputTokens": [
-                {"tokenAddress": from_token.address, "amount": str(amount.WEI)}
+                {"tokenAddress": from_token.address, "amount": str(amount.wei)}
             ],
             "outputTokens": [{"tokenAddress": to_token.address, "proportion": 1}],
             "userAddr": self.web3_client.address,
@@ -34,7 +34,7 @@ class Odos(BaseSwap):
             "referralCode": 2334531771,
         }
         response = requests.post(
-            ODOS_URL + "quote/v2",  # "https://api.odos.xyz/sor/quote/v2"
+            ODOS_URL + "quote/v2",
             headers={"Content-Type": "application/json"},
             json=data,
         )

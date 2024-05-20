@@ -33,7 +33,6 @@ class BaseSwap:
         )
 
         amount = Token_Amount(amount=amount, decimals=from_token.decimals)
-
         return self._execute_swap(
             from_token=from_token, to_token=to_token, amount=amount
         )

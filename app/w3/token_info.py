@@ -1,5 +1,5 @@
 import eth_utils
-from app.abis import abis
+from app.models import contracts
 
 
 class Token_Info:
@@ -18,13 +18,13 @@ class Token_Info:
             else:
                 address = eth_utils.address.to_checksum_address(token_address)
                 contract = w3_client.get_contract(
-                    address=token_address, abi=abis["erc20"]
+                    address=token_address, abi=contracts["erc20_abi"]
                 )
-                symbol = contract.functions.symbol().call().upper()
+                symbol = contract.functions.symbol().call()
                 decimals = contract.functions.decimals().call()
             return Token_Info(
                 address=address,
-                symbol=symbol,
+                symbol=symbol.upper(),
                 decimals=decimals,
             )
         except Exception as error:
@@ -37,38 +37,3 @@ class Token_Info:
             if token.symbol.upper() == network["currency"]["name"].upper()
             else False
         )
-
-    # @staticmethod
-    # async def to_wrapped_token(
-    #     network: config.Network,
-    #     from_token: "Token_Info" = None,
-    #     to_token: "Token_Info" = None,
-    # ):
-    #     if from_token:
-    #         if from_token.address == "":
-    #             from_token.address = eth_utils.address.to_checksum_address(
-    #                 config.GENERAL.WETH.get(network.get(NETWORK_FIELDS.NAME))
-    #             )
-    #     if to_token:
-    #         if to_token.address == "":
-    #             to_token.address = eth_utils.address.to_checksum_address(
-    #                 config.GENERAL.WETH.get(network.get(NETWORK_FIELDS.NAME))
-    #             )
-    #     return from_token, to_token
-
-    # @staticmethod
-    # async def to_native_token(
-    #     from_token: "Token_Info" = None,
-    #     to_token: "Token_Info" = None,
-    # ):
-    #     if from_token:
-    #         if from_token.address == "":
-    #             from_token.address = eth_utils.address.to_checksum_address(
-    #                 config.GENERAL.NATIVE_TOKEN
-    #             )
-    #     if to_token:
-    #         if to_token.address == "":
-    #             to_token.address = eth_utils.address.to_checksum_address(
-    #                 config.GENERAL.NATIVE_TOKEN
-    #             )
-    #     return from_token, to_token

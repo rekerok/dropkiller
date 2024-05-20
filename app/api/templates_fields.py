@@ -9,8 +9,8 @@ network = {
 }
 
 balance = {
-    "wei": fields.Integer(attribute=lambda x: x.WEI, default=0),
-    "ether": fields.Float(attribute=lambda x: x.ETHER, default=0),
+    "wei": fields.Integer(attribute=lambda x: x.wei, default=0),
+    "ether": fields.Float(attribute=lambda x: x.ether, default=0),
 }
 
 token = {
