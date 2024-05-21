@@ -2,12 +2,12 @@ import requests
 from app.w3.token_amount import Token_Amount
 from app.w3.token_info import Token_Info
 from app.w3.web3_client import Web3Client
-from app.config import ODOS_URL
-from . import BaseSwap
+from app.config import APIS
+from . import Swapper
 from app.models import contracts
 
 
-class Odos(BaseSwap):
+class Odos(Swapper):
 
     def __init__(self, web3_client: Web3Client, slippage: float = 5) -> None:
         super().__init__(web3_client=web3_client, slippage=slippage)
@@ -34,7 +34,7 @@ class Odos(BaseSwap):
             "referralCode": 2334531771,
         }
         response = requests.post(
-            ODOS_URL + "quote/v2",
+            APIS.ODOS + "quote/v2",
             headers={"Content-Type": "application/json"},
             json=data,
         )
@@ -52,7 +52,7 @@ class Odos(BaseSwap):
         }
 
         response = requests.post(
-            ODOS_URL + "assemble",
+            APIS.ODOS + "assemble",
             headers={"Content-Type": "application/json"},
             json=data,
         )

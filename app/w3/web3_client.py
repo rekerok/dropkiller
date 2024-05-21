@@ -59,7 +59,7 @@ class Web3Client:
         tx_params["maxPriorityFeePerGas"] = max_priority_fee_per_gas
         return tx_params
 
-    def get_data_transaction(
+    def get_transaction(
         self,
         to_address: str = None,
         data: str = None,
@@ -105,18 +105,30 @@ class Web3Client:
             decimals=amount.decimals,
             wei=True,
         )
-        data = contract.encodeABI(
-            "approve",
+
+        data = Web3Client.get_data_from_contrat(
+            contract=contract,
+            function_of_contract="approve",
             args=(
                 eth_utils.address.to_checksum_address(spender),
                 int(value_approove.wei),
             ),
         )
-        tx_params = self.get_data_transaction(
+        tx_params = self.get_transaction(
             to_address=token.address,
             data=data,
         )
         return tx_params
+
+    @staticmethod
+    def get_data_from_contrat(contract, function_of_contract: str, args: tuple = None):
+        try:
+            return contract.encodeABI(
+                function_of_contract,
+                args=args,
+            )
+        except Exception as error:
+            return None
 
     def _get_allowance(self, contract, owner: str, spender: str) -> Token_Amount:
         try:
@@ -185,14 +197,12 @@ class Web3Client:
                 params = tx_approve
             else:
                 type = "transaction"
-                params = self.get_data_transaction(to_address=to_address, data=data)
+                params = self.get_transaction(to_address=to_address, data=data)
 
         else:
             type = "transaction"
             value = amount
-            params = self.get_data_transaction(
-                to_address=to_address, data=data, value=value
-            )
+            params = self.get_transaction(to_address=to_address, data=data, value=value)
         return {
             "type": type,
             "params": params,

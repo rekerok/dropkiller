@@ -1,4 +1,4 @@
-from .base_swap import BaseSwap
+from .swapper import Swapper
 from .odos import Odos
 
 dex_swap = {
