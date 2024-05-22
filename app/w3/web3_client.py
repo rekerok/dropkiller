@@ -182,7 +182,7 @@ class Web3Client:
         to_address: str,
         amount: Token_Amount = None,
         data: str = None,
-        value=None,
+        value:Token_Amount=None
     ):
         if not Token_Info.is_native_token(network=self.network, token=from_token):
             need_approve = self.check_approve(
@@ -197,7 +197,7 @@ class Web3Client:
                 params = tx_approve
             else:
                 type = "transaction"
-                params = self.get_transaction(to_address=to_address, data=data)
+                params = self.get_transaction(to_address=to_address, data=data,value=value)
 
         else:
             type = "transaction"
