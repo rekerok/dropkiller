@@ -86,8 +86,6 @@ class Baseswap(Swapper):
                 function_of_contract="swapExactTokensForTokens",
                 args=(amount.wei, amount_in.wei, path, to, deadline),
             )
-        if data is None:
-            return None
         return self.web3_client.send_transaction(
             from_token=from_token,
             to_address=self.contract.address,
