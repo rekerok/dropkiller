@@ -1,0 +1,12 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "description": "dropkiller.app",
+      "version": "1.0.0",
+      "title": "dropkiller.app",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    }
+  }
