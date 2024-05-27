@@ -19,7 +19,6 @@ token = {
     "decimals": fields.String(attribute=lambda x: x.decimals),
 }
 
-# Определяем шаблон вывода для баланса
 balance_fields = {
     "address": fields.String(),
     "network": fields.Nested(network),

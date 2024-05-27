@@ -3,6 +3,7 @@ from flask_restful import Resource, marshal_with, reqparse
 from app import w3
 from app.models import get_network
 from app.w3.token_info import Token_Info
+from app.w3.web3_client import Web3Client
 from . import templates_fields
 
 parser = reqparse.RequestParser()
@@ -18,7 +19,7 @@ class Balance(Resource):
         address = args["address"]
         network = get_network(name=args["network"])
         token_address = args["token_address"]
-        w3 = w3.Web3Client(network=network, address=address)
+        w3 = Web3Client(network=network, address=address)
         token_info = Token_Info.get_info_token(
             w3_client=w3, token_address=token_address
         )
