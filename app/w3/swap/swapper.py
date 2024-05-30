@@ -5,8 +5,10 @@ from app.w3.web3_client import Web3Client
 
 
 class Swapper:
+    NAME = None
     URL = None
     SUPPORT_NETWORKS = None
+    TYPE = "swap"
 
     def __init__(self, web3_client: Web3Client, slippage: int = 5) -> None:
         self.web3_client = web3_client

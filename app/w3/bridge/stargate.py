@@ -7,7 +7,9 @@ from app.models import contracts
 
 
 class Stargate(Bridger):
+    NAME = "stargate"
     URL = "https://stargate.finance/"
+
     SUPPORT_NETWORKS = [
         "arbitrum_one",
         "base",

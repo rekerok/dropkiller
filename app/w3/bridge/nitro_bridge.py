@@ -7,16 +7,18 @@ from app.config import APIS
 
 
 class Nitro_Bridge(Bridger):
-    URL = None
+    NAME = "nitro_bridge"
+    URL = "https://app.routernitro.com/swap"
     SUPPORT_NETWORKS = [
-        "arbitrum",
+        "arbitrum_one",
         "base",
         "ethereum",
+        "scroll",
+        "zksync",
         "optimism",
         "avalanche",
         "polygon",
         "bsc",
-        "scroll",
     ]
 
     def __init__(

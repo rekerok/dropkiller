@@ -8,7 +8,8 @@ from app.models import contracts
 
 
 class Odos(Swapper):
-    URL = None
+    NAME = "odos"
+    URL = "https://app.odos.xyz/"
     SUPPORT_NETWORKS = [
         "arbitrum_one",
         "base",

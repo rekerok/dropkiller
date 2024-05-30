@@ -8,6 +8,18 @@ from app.config import APIS, ONE_INCH_KEY
 
 
 class One_Inch(Swapper):
+    NAME = "1inch"
+    URL = "https://app.1inch.io/"
+    SUPPORT_NETWORKS = [
+        "arbitrum_one",
+        "base",
+        "ethereum",
+        "optimism",
+        "avalanche",
+        "polygon",
+        "bsc",
+        "zksync",
+    ]
 
     def __init__(self, web3_client: Web3Client, slippage: float = 5) -> None:
         super().__init__(web3_client=web3_client, slippage=slippage)

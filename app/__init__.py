@@ -9,6 +9,7 @@ from app.api.swap import Swap
 from app.api.token import Token
 from app.api.transfer import Transfer
 from app.api.bridge import Bridge
+from app.api.dex import Dexex
 
 
 app = Flask(__name__)
@@ -34,3 +35,4 @@ api.add_resource(Swap, "/api/swap", endpoint="swap")
 api.add_resource(Approve, "/api/approve", endpoint="approve")
 api.add_resource(Transfer, "/api/transfer", endpoint="transfer")
 api.add_resource(Bridge, "/api/bridge", endpoint="bridge")
+api.add_resource(Dexex, "/api/dexes", endpoint="dexes")

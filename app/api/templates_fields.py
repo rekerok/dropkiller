@@ -19,6 +19,12 @@ token = {
     "decimals": fields.String(attribute=lambda x: x.decimals),
 }
 
+dex = {
+    "name": fields.String(attribute=lambda x: x["name"]),
+    "url": fields.String(attribute=lambda x: x["url"]),
+    "supported_networks": fields.List(fields.Nested(network)),
+}
+
 balance_fields = {
     "address": fields.String(),
     "network": fields.Nested(network),
@@ -41,7 +47,10 @@ transaction = {
     "address": fields.String,
     "amount": fields.Nested(balance),
 }
+
 transaction_full = {
     "transaction": fields.Nested(transaction),
     "network": fields.Nested(network),
 }
+
+dexes = {"dexes": fields.List(fields.Nested(dex))}
