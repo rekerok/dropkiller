@@ -103,6 +103,7 @@ contracts = {
         "contracts": {
             "ethereum": "0xCf5540fFFCdC3d510B18bFcA6d2b9987b0772559",
             "arbitrum_one": "0xa669e7A0d4b3e4Fa48af2dE86BD4CD7126Be4e13",
+            "optimism": "0xca423977156bb05b13a2ba3b76bc5419e2fe9680",
             "zksync": "0x4bBa932E9792A2b917D47830C93a9BC79320E4f7",
             "base": "0x19cEeAd7105607Cd444F5ad10dd51356436095a1",
             "polygon": "0x4E3288c9ca110bCC82bf38F09A7b425c095d92Bf",

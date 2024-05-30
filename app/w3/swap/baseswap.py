@@ -8,7 +8,10 @@ from app.models import contracts
 
 
 class Baseswap(Swapper):
-
+    URL = None
+    SUPPORT_NETWORKS = [
+        "base",
+    ]    
     def __init__(
         self, web3_client: Web3Client, slippage: float = 5, contract=None
     ) -> None:

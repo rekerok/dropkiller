@@ -7,6 +7,17 @@ from app.models import contracts
 
 
 class Stargate(Bridger):
+    URL = "https://stargate.finance/"
+    SUPPORT_NETWORKS = [
+        "arbitrum_one",
+        "base",
+        "ethereum",
+        "optimism",
+        "avalanche",
+        "polygon",
+        "bsc",
+        "scroll",
+    ]
 
     def __init__(
         self,
@@ -43,7 +54,6 @@ class Stargate(Bridger):
         except Exception as error:
             return None
 
-    # https://teletype.in/@cppmyk/stargate-bridger
     def _execute_bridge(
         self,
         amount: Token_Amount,

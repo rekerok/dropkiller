@@ -5,6 +5,9 @@ from app.w3.web3_client import Web3Client
 
 
 class Swapper:
+    URL = None
+    SUPPORT_NETWORKS = None
+
     def __init__(self, web3_client: Web3Client, slippage: int = 5) -> None:
         self.web3_client = web3_client
         self.slippage = slippage
@@ -14,8 +17,6 @@ class Swapper:
     def _execute_swap(
         self, from_token: Token_Info, to_token: Token_Info, amount: Token_Amount
     ): ...
-
-
 
     def swap(
         self,

@@ -7,6 +7,17 @@ from app.config import APIS
 
 
 class Nitro_Bridge(Bridger):
+    URL = None
+    SUPPORT_NETWORKS = [
+        "arbitrum",
+        "base",
+        "ethereum",
+        "optimism",
+        "avalanche",
+        "polygon",
+        "bsc",
+        "scroll",
+    ]
 
     def __init__(
         self,
