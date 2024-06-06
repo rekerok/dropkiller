@@ -1,38 +1,48 @@
-from flask import Flask
+from apispec import APISpec
+from flask import Flask, jsonify
+from flask import render_template
+from flask_apispec import FlaskApiSpec
 from flask_restful import Api
-from flask_swagger_ui import get_swaggerui_blueprint
+from app.api.dex import DexResource
+from app.api.gas import GasNetworkResource
 from app.config import *
-from app.api.approve import Approve
-from app.api.gas import Gas
-from app.api.balance import Balance
-from app.api.swap import Swap
-from app.api.token import Token
-from app.api.transfer import Transfer
-from app.api.bridge import Bridge
-from app.api.dex import Dexex
+from app.api.dexes import DexesResource
+from apispec.ext.marshmallow import MarshmallowPlugin
 
 
 app = Flask(__name__)
 api = Api(app)
-
-
-@app.route("/")
-def index():
-    return "Hello, world!"
-
-
-### SWAGGER SETTINGS
-SWAGGER_BLUEPRINT = get_swaggerui_blueprint(
-    SWAGGER_API_URL, SWAGGER_FILE, config={"name": "dropkiller.app"}
+app.config.update(
+    {
+        "APISPEC_SPEC": APISpec(
+            title="dropkiller API",
+            version="v1",
+            plugins=[MarshmallowPlugin()],
+            openapi_version="2.0",
+        ),
+        "APISPEC_SWAGGER_URL": "/swagger/",  # URL для Swagger JSON
+        "APISPEC_SWAGGER_UI_URL": "/",  # URL для Swagger UI
+    }
 )
-app.register_blueprint(SWAGGER_BLUEPRINT, url_prefix=SWAGGER_API_URL)
+
+
+# @app.route("/")
+# def index():
+#     return render_template("index.html")
+
+
+@app.route("/api/ping")
+def ping():
+    return jsonify({"status": "you're in"})
+
 
 ### API
-api.add_resource(Gas, "/api/gas", endpoint="gas")
-api.add_resource(Balance, "/api/balance", endpoint="balance")
-api.add_resource(Token, "/api/token", endpoint="token")
-api.add_resource(Swap, "/api/swap", endpoint="swap")
-api.add_resource(Approve, "/api/approve", endpoint="approve")
-api.add_resource(Transfer, "/api/transfer", endpoint="transfer")
-api.add_resource(Bridge, "/api/bridge", endpoint="bridge")
-api.add_resource(Dexex, "/api/dexes", endpoint="dexes")
+api.add_resource(GasNetworkResource, "/api/gas", endpoint="gas")
+api.add_resource(DexResource, "/api/dex/<string:name>", endpoint="dex")
+api.add_resource(DexesResource, "/api/dexes", endpoint="dexes")
+
+# DOCS
+docs = FlaskApiSpec(app)
+docs.register(GasNetworkResource, endpoint="gas")
+docs.register(DexResource, endpoint="dex")
+docs.register(DexesResource, endpoint="dexes")

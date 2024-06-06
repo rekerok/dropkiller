@@ -7,10 +7,9 @@ from app.models import contracts
 
 
 class Stargate(Bridger):
-    NAME = "stargate"
-    URL = "https://stargate.finance/"
-
-    SUPPORT_NETWORKS = [
+    name = "stargate"
+    url = "https://stargate.finance/"
+    support_networks = [
         "arbitrum_one",
         "base",
         "ethereum",
@@ -20,6 +19,7 @@ class Stargate(Bridger):
         "bsc",
         "scroll",
     ]
+    type="bridge"
 
     def __init__(
         self,

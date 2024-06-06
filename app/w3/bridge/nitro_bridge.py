@@ -7,9 +7,9 @@ from app.config import APIS
 
 
 class Nitro_Bridge(Bridger):
-    NAME = "nitro_bridge"
-    URL = "https://app.routernitro.com/swap"
-    SUPPORT_NETWORKS = [
+    name = "nitro_bridge"
+    url = "https://app.routernitro.com/swap"
+    support_networks = [
         "arbitrum_one",
         "base",
         "ethereum",
@@ -20,6 +20,7 @@ class Nitro_Bridge(Bridger):
         "polygon",
         "bsc",
     ]
+    type = "bridge"
 
     def __init__(
         self,

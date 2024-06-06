@@ -8,9 +8,9 @@ from app.models import contracts
 
 
 class Odos(Swapper):
-    NAME = "odos"
-    URL = "https://app.odos.xyz/"
-    SUPPORT_NETWORKS = [
+    name = "odos"
+    url = "https://app.odos.xyz/"
+    support_networks = [
         "arbitrum_one",
         "base",
         "ethereum",
@@ -20,6 +20,7 @@ class Odos(Swapper):
         "bsc",
         "zksync",
     ]
+    type = "swap"
 
     def __init__(self, web3_client: Web3Client, slippage: float = 5) -> None:
         super().__init__(web3_client=web3_client, slippage=slippage)

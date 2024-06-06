@@ -1,30 +1,27 @@
-import pprint
-from flask_restful import Resource, reqparse, marshal_with
+from flask_apispec import MethodResource, doc, marshal_with
+from flask_restful import Resource
+from app.api.shemas import DexSchema, DexesSchema
 from app.models import get_network
 from app.w3.swap import dex_swap
 from app.w3.bridge import dex_bridge
-from flask import jsonify
-from . import templates_fields
 
 
-class Dexex(Resource):
-    @marshal_with(templates_fields.dexes)
-    def get(self):
+class DexResource(MethodResource, Resource):
+    @doc(description="Get all DEXes and their supported networks", tags=["dexes "])
+    @marshal_with(DexSchema)  # Используем схему для сериализации ответа
+    def get(self, name):
         # Собираем все DEX из двух источников
-        all_dexes = list(dex_swap.values()) + list(dex_bridge.values())
-
+        all_dexes = {**dex_swap, **dex_bridge}
+        dex = all_dexes.get(name)
+        print(dex)
         # Подготавливаем информацию для каждого DEX
-        dex_info = [
-            {
-                "name": i.NAME,
-                "url": i.URL,
-                "supported_networks": [
-                    get_network(network) for network in i.SUPPORT_NETWORKS
-                ],
-            }
-            for i in all_dexes
-        ]
-
+        dex_info = {
+            "name": dex.name,
+            "url": dex.url,
+            "supported_networks": [
+                get_network(network) for network in dex.support_networks
+            ],
+            "type": dex.type,
+        }
         # Оборачиваем список DEX в словарь под ключ 'dexes'
-        # pprint.pprint(dex_info)
-        return {"dexes": dex_info}
+        return dex_info
