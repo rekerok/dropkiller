@@ -68,7 +68,7 @@ class TransactionSchema(Schema):
     params = fields.Dict()
     contract = fields.Str()
     address = fields.Str()
-    amount = fields.Nested(BalanceSchema)
+    amount = fields.Nested(AmountSchema)
 
 
 class TransferSchema(Schema):
