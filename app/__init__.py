@@ -6,6 +6,7 @@ from app.api.balance import BalanceResource
 from app.api.dex import DexResource
 from app.api.gas import GasNetworkResource
 from app.api.ping import PingResource
+from app.api.swap import SwapResource
 from app.api.token import TokenResource
 from app.api.transfer import TransferResource
 from app.config import *
@@ -45,6 +46,7 @@ api.add_resource(BalanceResource, "/api/balance/", endpoint="balance")
 api.add_resource(PingResource, "/api/ping", endpoint="ping")
 api.add_resource(TokenResource, "/api/token", endpoint="token")
 api.add_resource(TransferResource, "/api/transfer", endpoint="transfer")
+api.add_resource(SwapResource, "/api/swap", endpoint="swap")
 
 # DOCS
 docs = FlaskApiSpec(app)
@@ -55,3 +57,4 @@ docs.register(BalanceResource, endpoint="balance")
 docs.register(PingResource, endpoint="ping")
 docs.register(TokenResource, endpoint="token")
 docs.register(TransferResource, endpoint="transfer")
+docs.register(SwapResource, endpoint="swap")

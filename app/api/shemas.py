@@ -75,3 +75,10 @@ class TransferSchema(Schema):
     transaction = fields.Nested(TransactionSchema)
     network = fields.Nested(NetworkSchema)
 
+
+class SwapSchema(Schema):
+    transaction = fields.Nested(TransactionSchema)
+    network = fields.Nested(NetworkSchema)
+    from_token = fields.Nested(TokenSchema)
+    to_token = fields.Nested(TokenSchema)
+
