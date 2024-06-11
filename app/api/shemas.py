@@ -33,15 +33,31 @@ class DexSchema(Schema):
         fields.Nested(NetworkSchema),
         metadata={"description": "The supported networks of the DEX"},
     )
-    type=fields.Str(metadata={"description": "Type of the DEX"})
+    type = fields.Str(metadata={"description": "Type of the DEX"})
 
 
 class DexesSchema(Schema):
     dexes = fields.List(
         fields.Nested(DexSchema), metadata={"description": "A list of DEXes"}
     )
+
+
+class AmountSchema(Schema):
+    wei = fields.Integer(metadata={"description": "Balance in wei"}, default=0)
+    ether = fields.Float(metadata={"description": "Balance in ether"}, default=0)
+    decimals = fields.Integer(metadata={"description": "Balance decimals"})
+
+
 class TokenSchema(Schema):
     symbol = fields.Str(metadata={"description": "Token symbol"})
     address = fields.Str(metadata={"description": "Token address"})
     decimals = fields.Integer(metadata={"description": "Token decimals"})
 
+
+class BalanceSchema(Schema):
+    address = fields.Str(metadata={"description": "Wallet address"})
+    network = fields.Nested(NetworkSchema, metadata={"description": "Network details"})
+    token = fields.Nested(TokenSchema, metadata={"description": "Token details"})
+    balance = fields.Nested(
+        AmountSchema, metadata={"description": "Balance amount details"}
+    )

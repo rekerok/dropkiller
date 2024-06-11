@@ -24,6 +24,9 @@ class Web3Client:
         gas_now = Token_Amount(amount=self.w3.eth.gas_price, wei=True)
         return round(gas_now.ether * 10**9, 3)
 
+    def get_transaction(self, hash):
+        return dict(self.w3.eth.get_transaction(transaction_hash=hash))
+
     def get_contract(self, address: str, abi: str):
         return self.w3.eth.contract(
             address=eth_utils.address.to_checksum_address(address), abi=abi
@@ -59,7 +62,7 @@ class Web3Client:
         tx_params["maxPriorityFeePerGas"] = max_priority_fee_per_gas
         return tx_params
 
-    def get_transaction(
+    def create_transaction(
         self,
         to_address: str = None,
         data: str = None,
@@ -114,7 +117,7 @@ class Web3Client:
                 int(value_approove.wei),
             ),
         )
-        tx_params = self.get_transaction(
+        tx_params = self.create_transaction(
             to_address=token.address,
             data=data,
         )
@@ -182,7 +185,7 @@ class Web3Client:
         to_address: str,
         amount: Token_Amount = None,
         data: str = None,
-        value:Token_Amount=None
+        value: Token_Amount = None,
     ):
         if not Token_Info.is_native_token(network=self.network, token=from_token):
             need_approve = self.check_approve(
@@ -197,12 +200,16 @@ class Web3Client:
                 params = tx_approve
             else:
                 type = "transaction"
-                params = self.get_transaction(to_address=to_address, data=data,value=value)
+                params = self.create_transaction(
+                    to_address=to_address, data=data, value=value
+                )
 
         else:
             type = "transaction"
             value = amount
-            params = self.get_transaction(to_address=to_address, data=data, value=value)
+            params = self.create_transaction(
+                to_address=to_address, data=data, value=value
+            )
         return {
             "type": type,
             "params": params,
