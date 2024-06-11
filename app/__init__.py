@@ -1,5 +1,5 @@
 from apispec import APISpec
-from flask import Flask
+from flask import Flask, render_template
 from flask_apispec import FlaskApiSpec
 from flask_restful import Api
 from app.api.balance import BalanceResource
@@ -10,6 +10,8 @@ from app.api.token import TokenResource
 from app.config import *
 from app.api.dexes import DexesResource
 from apispec.ext.marshmallow import MarshmallowPlugin
+
+from app.utils.balance_utils import get_wallet_balances
 
 
 app = Flask(__name__)
@@ -26,6 +28,13 @@ app.config.update(
         "APISPEC_SWAGGER_UI_URL": "/",  # URL для Swagger UI
     }
 )
+
+
+@app.route("/balance/<address>")
+def balance_page(address):
+    balances = get_wallet_balances(address)
+    return render_template("balance.html", address=address, balances=balances)
+
 
 ### API
 api.add_resource(GasNetworkResource, "/api/gas", endpoint="gas")

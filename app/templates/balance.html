@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Balance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wallet Balance for {{ address }}</h1>
+    {% for network, tokens in balances.items() %}
+    <h2>{{ network }}</h2>
+    <table>
+        <tr>
+            <th>Token</th>
+            <th>Balance</th>
+        </tr>
+        {% for token, balance in tokens.items() %}
+        <tr>
+            <td>{{ token }}</td>
+            <td>{{ balance }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endfor %}
+</body>
+</html>

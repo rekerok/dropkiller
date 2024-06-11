@@ -11,6 +11,11 @@ networks = [
         "rpc": f"https://rpc.ankr.com/eth/{ANKR_RPC_KEY}",
         "url": "https://ethereum.org/",
         "currency": {"name": "ETH", "decimals": 18},
+        "tokens": [
+            "",
+            "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        ],
     },
     {
         "name": "arbitrum_one",
@@ -21,6 +26,12 @@ networks = [
         "rpc": f"https://rpc.ankr.com/arbitrum/{ANKR_RPC_KEY}",
         "url": "https://arbitrum.io/",
         "currency": {"name": "ETH", "decimals": 18},
+        "tokens": [
+            "",
+            "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+            "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+            "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        ],
     },
     {
         "name": "optimism",
@@ -31,6 +42,12 @@ networks = [
         "rpc": f"https://rpc.ankr.com/optimism/{ANKR_RPC_KEY}",
         "url": "https://optimism.io/",
         "currency": {"name": "ETH", "decimals": 18},
+        "tokens": [
+            "",
+            "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+            "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+            "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+        ],
     },
     {
         "name": "zksync",
@@ -41,6 +58,7 @@ networks = [
         "rpc": f"https://rpc.ankr.com/zksync_era/{ANKR_RPC_KEY}",
         "url": "https://zksync.io/",
         "currency": {"name": "ETH", "decimals": 18},
+        "tokens": [""],
     },
     {
         "name": "base",
@@ -51,6 +69,7 @@ networks = [
         "rpc": f"https://rpc.ankr.com/base/{ANKR_RPC_KEY}",
         "url": "https://base.org/",
         "currency": {"name": "ETH", "decimals": 18},
+        "tokens": [""],
     },
     {
         "name": "scroll",
@@ -61,6 +80,7 @@ networks = [
         "rpc": f"https://rpc.ankr.com/scroll/{ANKR_RPC_KEY}",
         "url": "https://scroll.io/",
         "currency": {"name": "ETH", "decimals": 18},
+        "tokens": [""],
     },
     {
         "name": "polygon",
@@ -71,6 +91,7 @@ networks = [
         "rpc": f"https://rpc.ankr.com/polygon/{ANKR_RPC_KEY}",
         "url": "https://polygon.technology/",
         "currency": {"name": "MATIC", "decimals": 18},
+        "tokens": [""],
     },
     {
         "name": "avalanche",
@@ -81,6 +102,7 @@ networks = [
         "rpc": f"https://rpc.ankr.com/avalanche/{ANKR_RPC_KEY}",
         "url": "https://www.avax.network/",
         "currency": {"name": "AVAX", "decimals": 18},
+        "tokens": [""],
     },
     {
         "name": "bsc",
@@ -91,6 +113,7 @@ networks = [
         "rpc": f"https://rpc.ankr.com/bsc/{ANKR_RPC_KEY}",
         "url": "https://www.bnbchain.org/en/",
         "currency": {"name": "BNB", "decimals": 18},
+        "tokens": [""],
     },
 ]
 
