@@ -40,3 +40,8 @@ class DexesSchema(Schema):
     dexes = fields.List(
         fields.Nested(DexSchema), metadata={"description": "A list of DEXes"}
     )
+class TokenSchema(Schema):
+    symbol = fields.Str(metadata={"description": "Token symbol"})
+    address = fields.Str(metadata={"description": "Token address"})
+    decimals = fields.Integer(metadata={"description": "Token decimals"})
+
