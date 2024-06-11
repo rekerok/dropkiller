@@ -3,6 +3,7 @@ from flask import Flask, render_template
 from flask_apispec import FlaskApiSpec
 from flask_restful import Api
 from app.api.balance import BalanceResource
+from app.api.bridge import BridgeResource
 from app.api.dex import DexResource
 from app.api.gas import GasNetworkResource
 from app.api.ping import PingResource
@@ -47,6 +48,7 @@ api.add_resource(PingResource, "/api/ping", endpoint="ping")
 api.add_resource(TokenResource, "/api/token", endpoint="token")
 api.add_resource(TransferResource, "/api/transfer", endpoint="transfer")
 api.add_resource(SwapResource, "/api/swap", endpoint="swap")
+api.add_resource(BridgeResource, "/api/bridge", endpoint="bridge")
 
 # DOCS
 docs = FlaskApiSpec(app)
@@ -58,3 +60,4 @@ docs.register(PingResource, endpoint="ping")
 docs.register(TokenResource, endpoint="token")
 docs.register(TransferResource, endpoint="transfer")
 docs.register(SwapResource, endpoint="swap")
+docs.register(BridgeResource, endpoint="bridge")

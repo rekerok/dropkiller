@@ -82,3 +82,10 @@ class SwapSchema(Schema):
     from_token = fields.Nested(TokenSchema)
     to_token = fields.Nested(TokenSchema)
 
+
+class BridgeSchema(Schema):
+    transaction = fields.Nested(TransactionSchema)
+    from_network = fields.Nested(NetworkSchema)
+    to_network = fields.Nested(NetworkSchema)
+    from_token = fields.Nested(TokenSchema)
+    to_token = fields.Nested(TokenSchema)
