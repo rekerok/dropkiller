@@ -1,30 +1,31 @@
-from flask_restful import Resource, reqparse, marshal_with
+from flask_apispec import MethodResource, doc, use_kwargs, marshal_with
+from marshmallow import fields
 
+from app.api.shemas import TransferSchema
 from app.models import get_network
 from app.w3.web3_client import Web3Client
-from . import templates_fields
-
-# Создаем объект reqparse для обработки параметров запроса
-parser = reqparse.RequestParser()
-parser.add_argument("from_address", type=str, required=True)
-parser.add_argument("to_address", type=str, required=True)
-parser.add_argument("network", type=str, required=True)
-parser.add_argument("token_address", type=str, default="")
-parser.add_argument("amount", type=int)
 
 
-class Transfer(Resource):
-    @marshal_with(templates_fields.transaction_full)
-    def get(self):
-        args = parser.parse_args()
-        from_address = args["from_address"]
-        to_address = args["to_address"]
-        network = get_network(name=args["network"])
-        token_address = args["token_address"]
-        amount = float(args["amount"])
-        w3_client = Web3Client(network=network, address=from_address)
+class TransferResource(MethodResource):
+    @doc(description="Transfer tokens between addresses", tags=["transfer"])
+    @use_kwargs(
+        {
+            "from_address": fields.Str(required=True, description="Sender address"),
+            "to_address": fields.Str(required=True, description="Recipient address"),
+            "network": fields.Str(required=True, description="Network name"),
+            "token_address": fields.Str(
+                required=False, missing="", description="Token address"
+            ),
+            "amount": fields.Float(required=True, description="Amount to transfer"),
+        },
+        location="query",
+    )
+    @marshal_with(TransferSchema)
+    def get(self, from_address, to_address, network, token_address, amount):
+        network_data = get_network(name=network)
+        w3_client = Web3Client(network=network_data, address=from_address)
 
         transaction = w3_client.transfer(
-            to_address=token_address, amount=10, token_address=token_address
+            to_address=to_address, amount=amount, token_address=token_address
         )
-        return {"transaction": transaction, "network": network}
+        return {"transaction": transaction, "network": network_data}

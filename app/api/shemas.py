@@ -61,3 +61,17 @@ class BalanceSchema(Schema):
     balance = fields.Nested(
         AmountSchema, metadata={"description": "Balance amount details"}
     )
+
+
+class TransactionSchema(Schema):
+    type = fields.Str()
+    params = fields.Dict()
+    contract = fields.Str()
+    address = fields.Str()
+    amount = fields.Nested(BalanceSchema)
+
+
+class TransferSchema(Schema):
+    transaction = fields.Nested(TransactionSchema)
+    network = fields.Nested(NetworkSchema)
+

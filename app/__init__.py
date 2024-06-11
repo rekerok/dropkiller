@@ -7,6 +7,7 @@ from app.api.dex import DexResource
 from app.api.gas import GasNetworkResource
 from app.api.ping import PingResource
 from app.api.token import TokenResource
+from app.api.transfer import TransferResource
 from app.config import *
 from app.api.dexes import DexesResource
 from apispec.ext.marshmallow import MarshmallowPlugin
@@ -43,6 +44,7 @@ api.add_resource(DexesResource, "/api/dexes", endpoint="dexes")
 api.add_resource(BalanceResource, "/api/balance/", endpoint="balance")
 api.add_resource(PingResource, "/api/ping", endpoint="ping")
 api.add_resource(TokenResource, "/api/token", endpoint="token")
+api.add_resource(TransferResource, "/api/transfer", endpoint="transfer")
 
 # DOCS
 docs = FlaskApiSpec(app)
@@ -52,3 +54,4 @@ docs.register(DexesResource, endpoint="dexes")
 docs.register(BalanceResource, endpoint="balance")
 docs.register(PingResource, endpoint="ping")
 docs.register(TokenResource, endpoint="token")
+docs.register(TransferResource, endpoint="transfer")
